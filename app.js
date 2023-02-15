@@ -27,10 +27,10 @@ function init() {
     }, 3600000);
 }
 
-function fetchVisa(url) {
+async function fetchVisa(url) {
     try {
         //var url = 'https://coubic.com/api/v2/merchants/Embassy-of-Japan/booking_events?renderer=widgetCalendar&start=2023-03-05T00:00:00.000+08:00&end=2023-04-01T23:59:59.999+08:00&resource_public_ids=768296';
-        request(url, function (error, response, body) {
+        await request(url, function (error, response, body) {
             const slots = JSON.parse(body);
             history.push(slots.length);
 
@@ -47,9 +47,9 @@ function fetchVisa(url) {
     }
 }
 
-function sendSlack(msg) {
+async function sendSlack(msg) {
     try {
-        request.post(
+        await request.post(
             process.env.SLACK_WEBHOOK_HOST,
             { json: { text: msg }}
         );
@@ -62,18 +62,18 @@ app.get('/', (req, res) => {
   res.send('Hello World!' + JSON.stringify(history))
 })
 
-app.get('/webhook', (req, res) => {
-    sendSlack('try ' + history.length + ' times');
+app.get('/webhook', async (req, res) => {
+    await sendSlack('try ' + history.length + ' times');
     res.send('Hello World!' + JSON.stringify(history))
 })
 
-app.get('/visa-1', (req, res) => {
-    fetchVisa('https://coubic.com/api/v2/merchants/Embassy-of-Japan/booking_events?renderer=widgetCalendar&start=2023-03-05T00:00:00.000+08:00&end=2023-04-01T23:59:59.999+08:00&resource_public_ids=948169');
+app.get('/visa-1', async (req, res) => {
+    await fetchVisa('https://coubic.com/api/v2/merchants/Embassy-of-Japan/booking_events?renderer=widgetCalendar&start=2023-03-05T00:00:00.000+08:00&end=2023-04-01T23:59:59.999+08:00&resource_public_ids=948169');
     res.send('Hello World!' + JSON.stringify(history))
 })
 
-app.get('/visa-2', (req, res) => {
-    fetchVisa('https://coubic.com/api/v2/merchants/Embassy-of-Japan/booking_events?renderer=widgetCalendar&start=2023-04-02T00:00:00.000+08:00&end=2023-05-06T23:59:59.999+08:00&resource_public_ids=948169');
+app.get('/visa-2', async (req, res) => {
+    await fetchVisa('https://coubic.com/api/v2/merchants/Embassy-of-Japan/booking_events?renderer=widgetCalendar&start=2023-04-02T00:00:00.000+08:00&end=2023-05-06T23:59:59.999+08:00&resource_public_ids=948169');
     res.send('Hello World!' + JSON.stringify(history))
 })
 
