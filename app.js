@@ -36,7 +36,7 @@ function fetchVisa(url) {
         if (error) {
             request.post(
                 process.env.SLACK_WEBHOOK_HOST,
-                { json: { text: 'error: ' + JSON.stringify(error) } },
+                { json: { text: 'error: ' + error } },
             );
         }
         }
