@@ -55,6 +55,12 @@ app.get('/webhook', (req, res) => {
     res.send('Hello World!' + JSON.stringify(history))
 })
 
+
+app.get('/visa', (req, res) => {
+    fetchVisa('https://coubic.com/api/v2/merchants/Embassy-of-Japan/booking_events?renderer=widgetCalendar&start=2023-04-02T00:00:00.000+08:00&end=2023-05-06T23:59:59.999+08:00&resource_public_ids=948169');
+    res.send('Hello World!' + JSON.stringify(history))
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
