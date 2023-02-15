@@ -51,7 +51,7 @@ function sendSlack(msg) {
     try {
         request.post(
             process.env.SLACK_WEBHOOK_HOST,
-            { json: { text: mgs }}
+            { json: { text: msg }}
         );
     } catch (e) {
         console.log(e);
