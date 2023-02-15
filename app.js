@@ -27,9 +27,9 @@ function fetchVisa(url) {
     request(url, function (error, response, body) {
         const slots = JSON.parse(body);
         history.push(slots.length);
-        if (slots.length > 0) {
+        if (slots.length > 0 ) {
             request.post(
-                'https://hooks.slack.com/services/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',
+                process.env.SLACK_WEBHOOK_HOST,
                 { json: { text: 'there is ' + slots.length + " slots, \n https://coubic.com/Embassy-of-Japan/widget/calendar/948169?from_pc=month&from_sp=agendaThreeDay" } },
             );
         }
