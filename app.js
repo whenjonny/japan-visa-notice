@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3000;
-var request = require('./await-request');
+var axios = require('axios');
 
 const history = [];
 
@@ -29,32 +29,27 @@ function init() {
 
 async function fetchVisa(url) {
     try {
-        //var url = 'https://coubic.com/api/v2/merchants/Embassy-of-Japan/booking_events?renderer=widgetCalendar&start=2023-03-05T00:00:00.000+08:00&end=2023-04-01T23:59:59.999+08:00&resource_public_ids=768296';
-        await request(url, function (error, response, body) {
-            const slots = JSON.parse(body);
-            history.push(slots.length);
+        const response = await axios.get(url);
+        const slots = (response.data);
+        history.push(slots.length);
 
-            if (slots.length > 0 ) {
-                sendSlack('there is ' + slots.length + " slots, \n https://coubic.com/Embassy-of-Japan/widget/calendar/948169?from_pc=month&from_sp=agendaThreeDay");
-            }
-            if (error) {
-                console.log("error:", error);
-                sendSlack('error: ' + error);
-            }
-        });
-    } catch (e) {
-        console.log(e);
+        if (slots.length > 0 ) {
+            sendSlack('there is ' + slots.length + " slots, \n https://coubic.com/Embassy-of-Japan/widget/calendar/948169?from_pc=month&from_sp=agendaThreeDay");
+        }
+    } catch (error) {
+        console.error(error);
+        sendSlack('error: ' + error);
     }
 }
 
 async function sendSlack(msg) {
     try {
-        await request.post(
+        await axios.post(
             process.env.SLACK_WEBHOOK_HOST,
             { json: { text: msg }}
         );
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 }
 
@@ -81,5 +76,4 @@ app.get('/visa-2', async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-
 
