@@ -13,18 +13,17 @@ try {
 
 function init() {
     setInterval(function() {
-        fetchVisa('https://coubic.com/api/v2/merchants/Embassy-of-Japan/booking_events?renderer=widgetCalendar&start=2023-03-05T00:00:00.000+08:00&end=2023-04-01T23:59:59.999+08:00&resource_public_ids=948169');
-        console.log('fetch visa info from 0305 ~ 0401, history: ' + history.length);
-    }, 4000);
-
-    setInterval(function() {
-        fetchVisa('https://coubic.com/api/v2/merchants/Embassy-of-Japan/booking_events?renderer=widgetCalendar&start=2023-04-02T00:00:00.000+08:00&end=2023-05-06T23:59:59.999+08:00&resource_public_ids=948169');
-        console.log('fetch visa info from 0402 ~ 0506, history: ' + history.length)
-    }, 5000);
-
-    setInterval(function() {
-        sendSlack('try ' + history.length + ' times, no empty slot');
-    }, 3600000);
+        if (history.length % 2 == 0) {
+            fetchVisa('https://coubic.com/api/v2/merchants/Embassy-of-Japan/booking_events?renderer=widgetCalendar&start=2023-03-05T00:00:00.000+08:00&end=2023-04-01T23:59:59.999+08:00&resource_public_ids=948169');
+        }
+        else if (history.length % 2 != 0) {
+            fetchVisa('https://coubic.com/api/v2/merchants/Embassy-of-Japan/booking_events?renderer=widgetCalendar&start=2023-04-02T00:00:00.000+08:00&end=2023-05-06T23:59:59.999+08:00&resource_public_ids=948169');
+        }
+        console.log('fetch visa info, history: ' + history.length);
+        if (history.length % 10 == 0) {
+            sendSlack('try ' + history.length + ' times, no empty slot');
+        }
+    }, 3000);
 }
 
 async function fetchVisa(url) {
