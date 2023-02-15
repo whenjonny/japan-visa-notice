@@ -46,7 +46,7 @@ async function sendSlack(msg) {
     try {
         await axios.post(
             process.env.SLACK_WEBHOOK_HOST,
-            { json: { text: msg }}
+            { text: msg }
         );
     } catch (e) {
         console.error(e);
