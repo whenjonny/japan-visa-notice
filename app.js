@@ -39,7 +39,6 @@ function fetchVisa(url) {
                 { json: { text: 'error: ' + error } },
             );
         }
-        }
     });
 }
 
