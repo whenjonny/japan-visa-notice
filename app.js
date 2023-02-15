@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3000;
-var request = require('request');
+var request = require('./await-request');
 
 const history = [];
 
