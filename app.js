@@ -33,7 +33,7 @@ function init() {
 function fetchVisa(url) {
     //var url = 'https://coubic.com/api/v2/merchants/Embassy-of-Japan/booking_events?renderer=widgetCalendar&start=2023-03-05T00:00:00.000+08:00&end=2023-04-01T23:59:59.999+08:00&resource_public_ids=768296';
     console.log('fetch visa info start');
-    await request(url, function (error, response, body) {
+    request(url, function (error, response, body) {
         const slots = JSON.parse(body);
         history.push(slots.length);
 
