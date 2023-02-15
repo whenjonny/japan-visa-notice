@@ -35,7 +35,7 @@ function fetchVisa(url) {
             history.push(slots.length);
 
             if (slots.length > 0 ) {
-                sendSlack(text: 'there is ' + slots.length + " slots, \n https://coubic.com/Embassy-of-Japan/widget/calendar/948169?from_pc=month&from_sp=agendaThreeDay");
+                sendSlack('there is ' + slots.length + " slots, \n https://coubic.com/Embassy-of-Japan/widget/calendar/948169?from_pc=month&from_sp=agendaThreeDay");
             }
             if (error) {
                 console.log("error:", error);
