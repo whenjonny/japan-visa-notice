@@ -40,6 +40,15 @@ app.get('/', (req, res) => {
   res.send('Hello World!' + JSON.stringify(history))
 })
 
+
+app.get('/webhook', (req, res) => {
+    request.post(
+        process.env.SLACK_WEBHOOK_HOST,
+        { json: { text: 'try ' + history.length + ' times' }}
+    );
+    res.send('Hello World!' + JSON.stringify(history))
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
